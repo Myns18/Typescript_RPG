@@ -1,4 +1,6 @@
 import  * as read  from "readline-sync";
+import { BasicAttaque } from "./attaques/BasicAttaque";
+import { Classe } from "./classes/Classe";
 import { Combattant } from "./combattants/Combattant";
 import { Monstre } from "./combattants/Monstre";
 import { Personnage } from "./combattants/Personnage";
@@ -16,7 +18,9 @@ export class Monde{
         let vie : number = +read.question("Combien de vies avez-vous ? ");
         let degats: number = +read.question("Combien de dégats faites-vous ? ")
         console.log("------------------------------------");
-        const newPersonnage : Personnage = new Personnage(nom, vie, degats);
+        const foudre : BasicAttaque = new BasicAttaque("Foudre", 50, 70);
+        const classePaladin : Classe = new Classe("Paladin", foudre);
+        const newPersonnage : Personnage = new Personnage(nom, vie, degats, classePaladin);
         return newPersonnage;
     }
 
@@ -62,11 +66,6 @@ export class Monde{
             personnage.attaquer(monstre);
             monstre.attaquer(personnage);
         }
-    }
-
-    public static afficherInformations(): void{
-        console.log("Rien");
-        
     }
 
 }

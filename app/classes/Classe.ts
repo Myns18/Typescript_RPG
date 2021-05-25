@@ -4,15 +4,16 @@ import { BasicAttaque } from "../attaques/BasicAttaque";
 export class Classe {
 
     private _nom: string;
-    private _listeAttaques: BasicAttaque[];
+    private _listeAttaques!: BasicAttaque[];
     
-    public constructor(nom : string, listeAttaques: BasicAttaque[]){
+    public constructor(nom : string, listeAttaques: BasicAttaque){
         this._nom = nom;
-        this._listeAttaques = listeAttaques;
+        this.listeAttaques.push(listeAttaques);
     }
 
     /**
      * Va chercher une attaque parmis une liste d'attaque.
+     * retourne les degats du spell
      * @param nomDuSpell 
      * @returns 
      */
@@ -22,7 +23,7 @@ export class Classe {
             for(let i=0; this.listeAttaques.length; i++){
                 if(this.listeAttaques[i].nom == nomDuSpell){
                     spellQuiexiste = true;
-                    return this.listeAttaques[i];
+                    return this.listeAttaques[i].degats;
                 }
                 if(spellQuiexiste == false && i+1 == this.listeAttaques.length){
                     console.log("Cette attaque n'existe pas.");
