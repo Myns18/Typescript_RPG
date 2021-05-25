@@ -1,9 +1,9 @@
-import { AbstractCombattant } from "./AbstractCombattant";
+import { Combattant } from "./Combattant";
 
-export class Personnage extends AbstractCombattant{
-    
+export class Monstre extends Combattant{
+
     public constructor(nom: string, pointDeVie: number, degats: number){
         super(nom, pointDeVie, degats);
     }
-    
+
 }
