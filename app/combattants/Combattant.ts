@@ -1,24 +1,22 @@
 import { ICombattant } from "../interfaces/ICombattant";
+import { IGroupe } from "../interfaces/IGroupe";
 
 export abstract class Combattant implements ICombattant{
 
     private _nom: string;
 
-    private _pointDeVie: number;
+    private _pointDeVie!: number;
 
-    private _degats: number;
+    private _degats!: number;
 
-    public constructor(nom: string, pointDeVie: number, degats: number){
+    public constructor(nom: string){
         this._nom = nom;
-        this._pointDeVie = pointDeVie;
-        this._degats = degats;
     }
-
     
     public attaquer(adversaire: Combattant){
-        this.defendre(adversaire.degats);
-        console.log(`${adversaire.nom} attaque !`);
-        console.log(`Vous avez perdu -${adversaire.degats} PV`);
+        adversaire.defendre(this.degats);
+        console.log(`${this.nom} lance Attaquer`);
+        console.log(`${adversaire.nom} à subit ${this.degats} degats`);
     }
 
     public defendre(degats: number){
@@ -28,7 +26,6 @@ export abstract class Combattant implements ICombattant{
             this.pointDeVie -= degats;
         }
     }
-
 
     public get nom(): string {
         return this._nom;

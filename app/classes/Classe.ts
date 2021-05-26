@@ -4,11 +4,12 @@ import { BasicAttaque } from "../attaques/BasicAttaque";
 export class Classe {
 
     private _nom: string;
-    private _listeAttaques!: BasicAttaque[];
+    private _listeAttaques: BasicAttaque[] = [];
+    private _pointDeVie! : number;
+    private _degats! : number;
     
-    public constructor(nom : string, listeAttaques: BasicAttaque){
+    public constructor(nom : string){
         this._nom = nom;
-        this.listeAttaques.push(listeAttaques);
     }
 
     /**
@@ -17,20 +18,12 @@ export class Classe {
      * @param nomDuSpell 
      * @returns 
      */
-    public getAttaque(nomDuSpell : string) : any{
-        let spellQuiexiste: boolean = false;
-        while(spellQuiexiste == false){
-            for(let i=0; this.listeAttaques.length; i++){
-                if(this.listeAttaques[i].nom == nomDuSpell){
-                    spellQuiexiste = true;
-                    return this.listeAttaques[i].degats;
-                }
-                if(spellQuiexiste == false && i+1 == this.listeAttaques.length){
-                    console.log("Cette attaque n'existe pas.");
-                    nomDuSpell = read.question("Veuillez reselectionner votre attaque : ");
-                }
-            }
-        }
+    public getAttaque() : BasicAttaque{
+        return this.listeAttaques[Math.floor(Math.random() * this.listeAttaques.length)];
+    }
+
+    public addAttaque(newAttaque: BasicAttaque): void{
+        this.listeAttaques.push(newAttaque);
     }
     
     public get nom(): string {
@@ -44,5 +37,17 @@ export class Classe {
     }
     public set listeAttaques(value: BasicAttaque[]) {
         this._listeAttaques = value;
+    }
+    public get pointDeVie(): number {
+        return this._pointDeVie;
+    }
+    public set pointDeVie(value: number) {
+        this._pointDeVie = value;
+    }
+    public get degats(): number {
+        return this._degats;
+    }
+    public set degats(value: number) {
+        this._degats = value;
     }
 }

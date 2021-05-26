@@ -1,8 +1,12 @@
 import { Combattant } from "./combattants/Combattant";
 import { Monde } from "./Monde";
 import { Monstre } from "./combattants/Monstre";
+import { Groupe } from "./combattants/Groupe";
 
-let personnage1 : Combattant = Monde.personnagesFactory();
-let monstre1 : Monstre = Monde.montresFactory();
+//1 créer les classes
+Monde.creationDesClasses();
 
-Monde.combat(personnage1, monstre1);
+let groupeDepersonne : Groupe = Monde.groupePersonnageFactory(2);
+let groupeDeMonstre : Groupe = Monde.groupeMonstreFactory(2);
+
+Monde.combatGroupe(groupeDepersonne, groupeDeMonstre);

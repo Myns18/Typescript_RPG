@@ -5,9 +5,15 @@ export class Personnage extends Combattant{
 
     private _classe: Classe;
     
-    public constructor(nom: string, pointDeVie: number, degats: number, classe : Classe){
-        super(nom, pointDeVie, degats);
+    public constructor(nom: string, classe : Classe){
+        super(nom);
         this._classe = classe;
+        this.pointDeVie = classe.pointDeVie;
+        this.degats = classe.degats;
+    }
+
+    public attaquer(adversaire: Combattant){
+        adversaire.defendre(this.classe.getAttaque().lancerAttaque(this ,adversaire));        
     }
     
     public get classe(): Classe {

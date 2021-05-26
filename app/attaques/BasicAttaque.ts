@@ -26,7 +26,6 @@ export class BasicAttaque implements IAttaque{
     }
     
     
-    
     public get chance(): number {
         return this._chance;
     }

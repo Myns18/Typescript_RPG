@@ -11,5 +11,5 @@ export interface IAttaque{
      * @param lanceur 
      * @param cible 
      */
-    lancerAttaque(lanceur : Combattant, cible : Combattant): void;
+    lancerAttaque(lanceur : Combattant, cible : Combattant, degatsDuSpell: number): void;
 }
