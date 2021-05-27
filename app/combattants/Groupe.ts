@@ -10,38 +10,42 @@ export class Groupe implements IGroupe{
     }
     
     public estMort(): boolean{
+        this.retirerMortDuGroupe();
         if(this.groupeCombattant.length == 0){
             return true;
         }
         return false;
     }
 
+    /**
+     * Retire un combattant du groupe quand ses PV sont inférieur à 0
+     */
     public retirerMortDuGroupe(){
         let enVie = true;
         while(enVie){
             for(let i:number=0; i < this.groupeCombattant.length; i++){
-                console.log(this.groupeCombattant[i].pointDeVie + " +++++++++ ");
                 if(this.groupeCombattant[i].pointDeVie <= 0){                        
-                    this.groupeCombattant.splice(i);
+                    this.groupeCombattant.splice(i, 1);
                     enVie = false;
+                    break;
                 }else if(i+1 == this.groupeCombattant.length){
                     enVie = false;
+                    break;
                 }
             }
         }
     }
-
+    /**
+     * Attaque un groupe de combattants
+     * @param adversaire 
+     */
     public attaquer(adversaire: Groupe){
-        this.retirerMortDuGroupe();
-        adversaire.retirerMortDuGroupe();
         if (this.groupeCombattant.length > 0 && adversaire.groupeCombattant.length > 0 ){
             let ramdomGroupeMonstre = Math.floor(Math.random() * this.groupeCombattant.length);
             let ramdomGroupePesonnage = Math.floor(Math.random() * adversaire.groupeCombattant.length);
-            console.log(this.groupeCombattant.length + " !!!!!!!!!!!!!!!! ");
-            console.log(adversaire.groupeCombattant.length + " AAAAAAAAAAAAAAAAAAAA ");
         
             this.groupeCombattant[ramdomGroupeMonstre].attaquer(adversaire.groupeCombattant[ramdomGroupePesonnage]);
-    }
+        }
     }
 
     public get groupeCombattant(): Combattant[] {

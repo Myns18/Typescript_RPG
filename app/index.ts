@@ -1,12 +1,24 @@
-import { Combattant } from "./combattants/Combattant";
+import  * as read  from "readline-sync";
 import { Monde } from "./Monde";
-import { Monstre } from "./combattants/Monstre";
-import { Groupe } from "./combattants/Groupe";
 
-//1 créer les classes
+let menu : string[] = ["Lancer un combat 1v1", "Lancer un combat de groupe"]; 
+
+// - 1 création des classes
 Monde.creationDesClasses();
 
-let groupeDepersonne : Groupe = Monde.groupePersonnageFactory(2);
-let groupeDeMonstre : Groupe = Monde.groupeMonstreFactory(2);
+// - 2 Génération du menu
+console.log("---***--- Bonjour ---***---");
+console.log("-- Choisir une option --");
+let mode = read.keyInSelect(menu, "", {cancel:false});
+console.log("---***---         ---***---");
 
-Monde.combatGroupe(groupeDepersonne, groupeDeMonstre);
+Monde.startGameMode(mode);
+
+
+
+
+
+
+
+
+

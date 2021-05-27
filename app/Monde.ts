@@ -1,6 +1,6 @@
 import  * as read  from "readline-sync";
-import { BasicAttaque } from "./attaques/BasicAttaque";
 import { Classe } from "./classes/Classe";
+import { God } from "./classes/God";
 import { Mage } from "./classes/Mage";
 import { Paladin } from "./classes/Paladin";
 import { Combattant } from "./combattants/Combattant";
@@ -11,6 +11,7 @@ import { Personnage } from "./combattants/Personnage";
 export class Monde{
 
     public static classes: Classe[] = [];
+    public static classesNom: string[] = ["Paladin", "Mage", "God"];
 
     /**
      * Création d'un nouveau personnage
@@ -20,12 +21,16 @@ export class Monde{
     public static personnagesFactory(): Personnage{
         console.log("------------- Personnage ---------------");
         let nom : string = read.question("Quel est le nom de votre personnage ? ");
-        let chooseClasse: string = read.question("Choissisez votre classe : ");
+        let chooseClasse: number = read.keyInSelect(Monde.classesNom, "Choisisez une classe", {cancel:false});
         console.log("------------------------------------");
-        const newPersonnage : Personnage = new Personnage(nom, this.getClasses(chooseClasse));
+        const newPersonnage : Personnage = new Personnage(nom, this.choisirClasse(chooseClasse));
         return newPersonnage;
     }
-
+    /**
+     * Crée un groupe de personnage
+     * @param nombreDuGroupe 
+     * @returns 
+     */
     public static groupePersonnageFactory(nombreDuGroupe: number): Groupe{
         let personnage : Groupe = new Groupe();
         for(let i=0; i < nombreDuGroupe; i++){
@@ -33,7 +38,11 @@ export class Monde{
         }
         return personnage;
     }
-
+    /**
+     * Crée un groupe de nombre
+     * @param nombreDuGroupe 
+     * @returns 
+     */
     public static groupeMonstreFactory(nombreDuGroupe: number): Groupe{
         let monstre : Groupe = new Groupe();
         for(let i=0; i < nombreDuGroupe; i++){
@@ -49,8 +58,8 @@ export class Monde{
      */
     public static montresFactory(): Monstre{
         console.log("------------- Monstre ---------------");
-        let vie : number = +read.question("Combien de vies avez-vous ? ");
-        let degats: number = +read.question("Combien de dégats faites-vous ? ");
+        let vie : number = Math.floor(Math.random() * 100);
+        let degats: number = 50;
         console.log("------------------------------------");
         const newMonstre : Monstre = new Monstre(this.genererNom(), vie, degats);
         return newMonstre;
@@ -91,7 +100,11 @@ export class Monde{
             tour++;
         }
     }
-
+    /**
+     * Combat à mort entre deux groupes de combattants
+     * @param personnage 
+     * @param monstre 
+     */
     public static combatGroupe(personnage: Groupe, monstre: Groupe){   
         let tour = 1;     
         while(!personnage.estMort() && !monstre.estMort()){
@@ -102,19 +115,29 @@ export class Monde{
                 monstre.attaquer(personnage);
             }
             tour++;
-        }
-        if(personnage.estMort() == false && monstre.estMort() == true){
-            console.log("Tous les monstres sont morts, les personnages ont gagnés");
-        }else if(personnage.estMort() == true && monstre.estMort() == false){
-            console.log("Tous les personnages sont morts, les monstres ont gagnés");  
+            if(personnage.estMort() == false && monstre.estMort() == true){
+                console.log("Tous les monstres sont morts, les personnages ont gagnés");                
+                break;
+            }else if(personnage.estMort() == true && monstre.estMort() == false){
+                console.log("Tous les personnages sont morts, les monstres ont gagnés");  
+                break;
+            }
         }
     }
-
+    /**
+     * Génération des classes
+     */
     public static creationDesClasses(){
         Monde.classes.push(new Paladin("Paladin", 200));
         Monde.classes.push(new Mage("Mage", 100));
+        Monde.classes.push(new God("God", 1000));
     }
 
+    /**
+     * Vérifie si une classe existe
+     * @param nomDeLaClasse 
+     * @returns 
+     */
     public static getClasses(nomDeLaClasse: string): Classe{
         let classeQuiexiste: boolean = false;
         while(classeQuiexiste == false){
@@ -130,4 +153,57 @@ export class Monde{
         }
         return this.classes[0];
     }   
+    /**
+     * Démarre le jeu
+     * @param mode 
+     */
+    public static startGameMode(mode: number){
+        switch(mode) { 
+            case 0: { 
+                let personnage1 : Combattant = Monde.personnagesFactory();
+                let monstre1 : Monstre = Monde.montresFactory();
+                Monde.combat(personnage1, monstre1); 
+                break; 
+            } 
+            case 1: { 
+                let groupeDepersonne : Groupe = Monde.groupePersonnageFactory(2);
+                let groupeDeMonstre : Groupe = Monde.groupeMonstreFactory(2);
+                Monde.combatGroupe(groupeDepersonne, groupeDeMonstre);
+                break; 
+            } 
+            case 2: { 
+                // A faire
+                break; 
+            } 
+            case 3: { 
+                // A faire
+                break; 
+            } 
+            default: { 
+               break; 
+            } 
+         } 
+    }
+    /**
+     * Choisir une classe
+     * @param classe 
+     * @returns 
+     */
+    public static choisirClasse(classe: number): Classe{
+        switch(classe) { 
+            case 0: { 
+                return this.getClasses("Paladin");
+            } 
+            case 1: { 
+                return this.getClasses("Mage");
+            } 
+            case 2: { 
+                return this.getClasses("God");
+            }
+            default: { 
+               break; 
+            } 
+         }
+         return this.getClasses("0"); 
+    }
 }

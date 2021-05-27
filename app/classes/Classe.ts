@@ -1,7 +1,7 @@
-import  * as read  from "readline-sync";
 import { BasicAttaque } from "../attaques/BasicAttaque";
+import { IClasse } from "../interfaces/IClasse";
 
-export class Classe {
+export class Classe implements IClasse{
 
     private _nom: string;
     private _listeAttaques: BasicAttaque[] = [];
@@ -22,9 +22,15 @@ export class Classe {
         return this.listeAttaques[Math.floor(Math.random() * this.listeAttaques.length)];
     }
 
+    /**
+     * Ajoute une attaque à une classe
+     * @param newAttaque 
+     */
     public addAttaque(newAttaque: BasicAttaque): void{
         this.listeAttaques.push(newAttaque);
     }
+
+    public creationSpell(){}
     
     public get nom(): string {
         return this._nom;

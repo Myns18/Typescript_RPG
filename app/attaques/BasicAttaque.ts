@@ -16,8 +16,11 @@ export class BasicAttaque implements IAttaque{
     public lancerAttaque(lanceur : Combattant, cible : Combattant): number{
         let chanceDeNePasToucher = Math.floor(Math.random() * 100);
         if(chanceDeNePasToucher <= this.chance){
-            console.log(`${lanceur.nom} lance ${this.nom}`);
-            console.log(`${cible.nom} à subit ${this.degats} degats`);
+            console.log(`${lanceur.nom} (${lanceur.pointDeVie}) lance ${this.nom} sur ${cible.nom} (${cible.pointDeVie})`);
+            console.log(`${cible.nom} (${cible.pointDeVie-this.degats}) à subit ${this.degats} degats`);            
+            if(cible.pointDeVie-this.degats <= 0){
+                console.log(`${cible.nom} n'a pas survécu`);
+            }
             return this.degats;
         }else{
             console.log("Echec critique !");

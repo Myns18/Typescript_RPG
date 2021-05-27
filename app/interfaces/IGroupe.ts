@@ -8,7 +8,7 @@ export interface IGroupe{
      */
     addCombattant(newCombattant : Combattant): void;
     /**
-     * Check si un Combattant est mort
+     * Vérifie si un Combattant est mort
      */
     estMort(): boolean;
 

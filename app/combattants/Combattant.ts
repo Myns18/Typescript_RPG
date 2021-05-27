@@ -1,5 +1,4 @@
 import { ICombattant } from "../interfaces/ICombattant";
-import { IGroupe } from "../interfaces/IGroupe";
 
 export abstract class Combattant implements ICombattant{
 
@@ -14,9 +13,12 @@ export abstract class Combattant implements ICombattant{
     }
     
     public attaquer(adversaire: Combattant){
+        console.log(`${this.nom} (${this.pointDeVie}) lance Attaquer sur ${adversaire.nom} (${adversaire.pointDeVie})`);
         adversaire.defendre(this.degats);
-        console.log(`${this.nom} lance Attaquer`);
-        console.log(`${adversaire.nom} à subit ${this.degats} degats`);
+        console.log(`${adversaire.nom} (${adversaire.pointDeVie}) à subit ${this.degats} degats`);
+        if(adversaire.pointDeVie <= 0){
+            console.log(`${adversaire.nom} n'a pas survécu`);
+        }
     }
 
     public defendre(degats: number){
