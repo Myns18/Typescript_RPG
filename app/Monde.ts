@@ -93,7 +93,7 @@ export class Monde{
     }
 
     public static combatGroupe(personnage: Groupe, monstre: Groupe){   
-        let tour = 0;     
+        let tour = 1;     
         while(!personnage.estMort() && !monstre.estMort()){
             console.log(`-------------------- Tour ${tour} --------------------`);
             if(tour%2 == 0){
@@ -102,6 +102,11 @@ export class Monde{
                 monstre.attaquer(personnage);
             }
             tour++;
+        }
+        if(personnage.estMort() == false && monstre.estMort() == true){
+            console.log("Tous les monstres sont morts, les personnages ont gagnés");
+        }else if(personnage.estMort() == true && monstre.estMort() == false){
+            console.log("Tous les personnages sont morts, les monstres ont gagnés");  
         }
     }
 
